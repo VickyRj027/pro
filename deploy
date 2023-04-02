@@ -1,0 +1,32 @@
+pipeline{
+    agent {
+        label {
+            label "dev"
+            customWorkspace "/mnt/project/"
+        }
+    }
+    stages{
+        stage ("slave1-deploy"){
+            steps {
+                sh "git clone https://github.com/Akash9396/velocity-devops-project.git"
+                dir ("velocity-devops-project/"){
+                    sh "sudo docker-compose up -d"
+                }
+            }
+        }
+        stage ("slave2-deploy"){
+            agent {
+                label {
+                    label "qa"
+                    customWorkspace "/mnt/project/"
+                }
+            }
+            steps {
+                sh "git clone https://github.com/Akash9396/velocity-devops-project.git"
+                dir ("velocity-devops-project/"){
+                    sh "sudo docker-compose up -d"
+                }
+            }
+        }
+    }
+}

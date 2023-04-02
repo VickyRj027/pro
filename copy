@@ -1,0 +1,51 @@
+pipeline{
+    agent{
+        label{
+            label "built-in"
+            customWorkspace "/mnt/war/"
+        }
+    }
+    stages{
+        stage ("parallel1"){
+            parallel {
+                stage ("clear-slave1"){
+                    agent{
+                        label{
+                            label "dev"
+                            customWorkspace "/mnt/war"
+                        }
+                    }
+                    steps{
+                        sh "rm -rf *"
+                    }
+                }
+                stage ("clear-slave2"){
+                    agent{
+                        label{
+                            label "qa"
+                            customWorkspace "/mnt/war"
+                        }
+                    }
+                    steps{
+                        sh "rm -rf *"
+                    }
+                }
+            }
+        }
+        stage ("parallel2"){
+            parallel {
+                stage ("copy-slave1"){
+                    steps{
+                        sh "scp gameoflife.war akash@172.31.45.66:/mnt/war/"
+                    }
+                }
+                stage ("copy-slave2"){
+                    steps{
+                        sh "scp gameoflife.war akash@172.31.39.65:/mnt/war/"
+                    }
+                }
+            }
+        }
+    }
+}
+

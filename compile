@@ -1,0 +1,21 @@
+pipeline{
+    agent{
+        label {
+            label "built-in"
+            customWorkspace "/mnt/project"
+        }
+    }
+    stages {
+        stage ("compile"){
+            steps{
+                sh "rm -rf *"
+                sh "git clone https://github.com/Akash9396/game-of-life.git"
+                dir ("/mnt/project/game-of-life"){
+                    sh "mvn clean install"
+                }
+                sh "rm -rf /mnt/war/*"
+                sh "cp -r game-of-life/gameoflife-web/target/gameoflife.war /mnt/war/"
+            }
+        }
+    }
+}

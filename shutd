@@ -1,0 +1,28 @@
+pipeline{
+    agent{
+        label {
+            label "dev"
+            customWorkspace "/mnt/project/"
+        }
+    }
+    stages{
+        stage ("slave1-down"){
+            steps {
+                sh "cd velocity-devops-project && sudo docker-compose down"
+                sh "sudo docker system prune -a -f"
+            }
+        }
+        stage ("slave2-down"){
+            agent{
+                label {
+                    label "qa"
+                    customWorkspace "/mnt/project/"
+                }
+            }
+            steps {
+                sh "cd velocity-devops-project && sudo docker-compose down"
+                sh "sudo docker system prune -a -f"
+            }
+        }
+    }
+}
