@@ -12,7 +12,7 @@ pipeline{
                     agent{
                         label{
                             label "dev"
-                            customWorkspace "/mnt/war"
+                            customWorkspace "/mnt/project"
                         }
                     }
                     steps{
@@ -23,7 +23,7 @@ pipeline{
                     agent{
                         label{
                             label "qa"
-                            customWorkspace "/mnt/war"
+                            customWorkspace "/mnt/project"
                         }
                     }
                     steps{
@@ -36,12 +36,12 @@ pipeline{
             parallel {
                 stage ("copy-slave1"){
                     steps{
-                        sh "scp gameoflife.war akash@172.31.45.66:/mnt/war/"
+                        sh "scp gameoflife.war akash@172.31.45.66:/mnt/project/"
                     }
                 }
                 stage ("copy-slave2"){
                     steps{
-                        sh "scp gameoflife.war akash@172.31.39.65:/mnt/war/"
+                        sh "scp gameoflife.war akash@172.31.39.65:/mnt/project/"
                     }
                 }
             }
