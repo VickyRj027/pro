@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage ("slave1-deploy"){
             steps {
-                sh "git clone https://github.com/Akash9396/velocity-devops-project.git"
+                sh "git clone https://github.com/VickyRj027/velocity-devops-project.git"
                 dir ("velocity-devops-project/"){
                     sh "sudo docker-compose up -d"
                 }
@@ -22,7 +22,7 @@ pipeline{
                 }
             }
             steps {
-                sh "git clone https://github.com/Akash9396/velocity-devops-project.git"
+                sh "git clone https://github.com/VickyRj027/velocity-devops-project.git"
                 dir ("velocity-devops-project/"){
                     sh "sudo docker-compose up -d"
                 }
